@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { ScrubberBar } from "./scrubber-bar-component";
 
-function App() {
+
+const App = () => {
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [playState, setPlayState] = useState(false);
+
+  useEffect(() => {
+    if (playState && elapsedTime < 100) {
+      updateTime();
+    }
+  },[elapsedTime, playState]);
+
+  const updateTime = async () => {
+    const delay = await new Promise(resolve => setTimeout(resolve, 1000))
+    setElapsedTime(elapsedTime + 1);
+  }
+
+  const handleTimer = () => {
+    setPlayState(!playState);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <dt>current time</dt>
+      <dd>{elapsedTime} sec</dd>
+      <ScrubberBar elapsedTime={elapsedTime} />
+      <button
+        onClick={handleTimer}
+      >
+        {playState ? "pause" : "play"}
+      </button>
     </div>
   );
 }
