@@ -1,17 +1,18 @@
 import { useState } from "react"
 
 export const Marker = ({start, stop}) => {
-    const [width, setWidth] = useState(stop - start);
-    debugger
+    console.log("start time:    "+start);
+    console.log("stop time:    "+stop);
     return (
         <div
             style={{
                 zIndex: 1000,
                 backgroundColor: "yellow",
-                width: `${width}em`,
+                width: `${stop - start}em`,
                 left: `${start}em`,
                 height: ".8em",
-                position: "absolute"
+                position: "absolute",
+                border: "solid",
             }}
         >
         </div>
