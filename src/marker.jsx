@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export const Marker = ({start, stop}) => {
     const [width, setWidth] = useState(stop - start);
-    debugger
+
     return (
         <div
             style={{
