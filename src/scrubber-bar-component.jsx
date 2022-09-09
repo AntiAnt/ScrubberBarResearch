@@ -1,6 +1,6 @@
 import { Marker } from "./marker"
 
-export const ScrubberBar = ({elapsedTime,startTime,stopTime}) => {
+export const ScrubberBar = ({elapsedTime,posList}) => {
     return (
         <div>
             <div
@@ -13,7 +13,9 @@ export const ScrubberBar = ({elapsedTime,startTime,stopTime}) => {
                     margin: "1em",
                 }}
             >
-                <Marker start={startTime} stop={stopTime} />
+                {posList.map((pos)=>{
+                    return <Marker start={pos.startPos} stop={pos.stopPos} />
+                })}
                 <div
                     style={{
                         width: ".8em",
