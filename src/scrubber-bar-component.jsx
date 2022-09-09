@@ -1,21 +1,19 @@
 import { Marker } from "./marker"
 
-export const ScrubberBar = ({elapsedTime}) => {
-    
+export const ScrubberBar = ({elapsedTime,startTime,stopTime}) => {
     return (
         <div>
             <div
                 style={{
-                    width: "100em",
+                    width: "50em",
                     height: "1em",
                     border: ".1em solid grey",
-                    backgroundColor: "lightblue",
+                    backgroundColor: "lightgrey",
                     borderRadius: ".5em",
                     margin: "1em",
                 }}
             >
-                <Marker start={20} stop={40} />
-                <Marker start={65} stop={95} />
+                <Marker start={startTime} stop={stopTime} />
                 <div
                     style={{
                         width: ".8em",
