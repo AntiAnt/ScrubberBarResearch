@@ -20,13 +20,6 @@ function App() {
     }
   },[video]);
 
-  function getTimeStamp(){
-    if(!!video){
-      currTime=video.current.currentTime;
-      console.log(currTime);
-    }
-  }
-
   function getStartTimeStamp(){
     if(!!video){
       setStartPos(video.current.currentTime*increment);
@@ -69,32 +62,16 @@ function App() {
       video.current.pause();
     }
   }
-/* 
-  function seekBar(){
-    // Calculate the new time
-    var time = video.current.duration * (seekBarRef.current.value / 100);
-    // Update the video time
-    video.current.currentTime = time;
-  }
-*/
+
   function calcTime(){
     // Calculate the slider value
-    var increment = 50/videoDuration;
     setElapsedTime(video.current.currentTime*increment);
   } 
-
-  function whenMousedown(){
-    video.current.pause();
-  }
-
-  function whenMouseup(){
-    video.current.play();
-  }
 
   const handleTimer = () => {
     setPlayState(!playState);
   }
-// below we are replacing the onTimeUpdate for video with seekBar instead of loop
+
   return (
     <div className="App">
       <header className="App-header">
