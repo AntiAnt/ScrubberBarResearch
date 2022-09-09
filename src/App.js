@@ -11,6 +11,8 @@ function App() {
   const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
   let currTime = null;
+  const [listOfStartStop, setListOfStartStop] = useState([]);
+  const increment = 50/videoDuration;
 
   useEffect(() => {
     if (video.current) {
@@ -27,17 +29,23 @@ function App() {
 
   function getStartTimeStamp(){
     if(!!video){
-      var increment = 50/videoDuration;
       setStartPos(video.current.currentTime*increment);
-      console.log(video.current.currentTime);
+      console.log("Start Pos Set: "+video.current.currentTime);
+
     }
   }
 
   function getStopTimeStamp(){
     if(!!video){
-      var increment = 50/videoDuration;
       setStopPos(video.current.currentTime*increment);
-      console.log(video.current.currentTime);
+      console.log("Stop pos set: "+video.current.currentTime);
+      const posPair = {
+        "startPos":startPos,
+        "stopPos":video.current.currentTime*increment
+      };
+      listOfStartStop.push(posPair);
+      setListOfStartStop([...listOfStartStop]);
+      clearPos();
     }
   }
 
@@ -49,9 +57,9 @@ function App() {
     }
   } */
 
-  function clearTimeStamps(){
-    setStartPos(null);
-    setStopPos(null);
+  function clearPos(){
+    setStartPos(0);
+    setStopPos(0);
   }
 
   function onPlay(){
@@ -102,7 +110,7 @@ function App() {
             handleTimer();
             onPlay();
             }}>{playState ? "pause" : "play"}</button>
-             <ScrubberBar elapsedTime={elapsedTime} startTime={startPos} stopTime={stopPos} />
+             <ScrubberBar elapsedTime={elapsedTime} posList={listOfStartStop} />
           </div>
           <button id="startTimeButton" onClick={getStartTimeStamp}>Set Start Timestamp</button>
           <button id="stopTimeButton" onClick={getStopTimeStamp}>Set Stop Timestamp</button>
