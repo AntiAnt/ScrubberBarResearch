@@ -5,36 +5,23 @@ import listStartStop  from "./context";
 
 
 const App = () => {
-
     const vidElem = useRef(null)
-    const [elapsedTime, setElapsedTime] = useState(0);
     const [playState, setPlayState] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [stopTime, setStopTime] = useState(null);
     const [listOfStartStop, setListOfStartStop] = useState([]);
-    // const [dur, setDur] = useState(undefined);
-    let dur = null;
+    const [currPos, setCurrPos] = useState(0);
 
-    // useEffect(() => {
-    //     if (vidElem !== null && vidElem.current !== null){
-    //         dur = vidElem.current.duration;
-    //     }
-    // }, [vidElem]);
+    const HandleIncChange = (event) => {
+        const ratio = 78.1/event.target.duration;
+        setCurrPos(ratio*event.target.currentTime)
+    };
 
-
-    // const listOfStartStop = [];
     const vidTimeControls = 5;
 
     const ClearStartStopState = () => {
-        console.log(listOfStartStop)
         setStartTime(null);
         setStopTime(null);
-    }
-
-    const HandleGetDur = (event) => {
-        if (vidElem !== null && vidElem.current !== null){
-            dur = vidElem.current.duration;
-        }
     }
 
     const HandleKeyUp = (event) => {
@@ -45,8 +32,6 @@ const App = () => {
             };
             listOfStartStop.push(newWindow);
             setListOfStartStop([...listOfStartStop]);
-            console.log(vidElem.current.currentTime, 'key up');
-            console.log(dur)
             ClearStartStopState()
         }
     }
@@ -56,7 +41,6 @@ const App = () => {
             case "s":
                 if (startTime === null){
                     setStartTime(vidElem.current.currentTime);
-                    console.log(vidElem.current.currentTime , 'key down');
                 }
                 break;
             case "j":
@@ -70,17 +54,6 @@ const App = () => {
                 break;
         }
     }
-
-    // useEffect(() => {
-    //     if (playState && elapsedTime < 100) {
-    //         updateTime();
-    //     }
-    // },[elapsedTime, playState]);
-
-    // const updateTime = async () => {
-    //     const delay = await new Promise(resolve => setTimeout(resolve, 1000))
-    //     setElapsedTime(elapsedTime + 1);
-    // }
 
     const handleTimer = () => {
         setPlayState(!playState);
@@ -96,6 +69,7 @@ const App = () => {
                        onKeyUp={HandleKeyUp}
                        ref={vidElem}
                        preload="auto"
+                       onTimeUpdate={HandleIncChange}
                 >
                     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
                             type="video/mp4"/>
@@ -116,10 +90,7 @@ const App = () => {
                         )}
                     </dl>
             </div>
-
-            <dt>current time</dt>
-            <dd>{elapsedTime} sec</dd>
-            <ScrubberBar elapsedTime={elapsedTime} />
+            <ScrubberBar currPos={currPos} />
             <button
                 onClick={handleTimer}
             >

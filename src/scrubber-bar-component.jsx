@@ -1,39 +1,44 @@
 import { Marker } from "./marker"
 import listStartStop from "./context"
-import {useContext} from "react";
+import React, {useContext, useState} from "react";
 
-export const ScrubberBar = ({elapsedTime}) => {
-    const {list, setList} = useContext(listStartStop)
+export const ScrubberBar = ({currPos}) => {
+    const {list} = useContext(listStartStop)
 
-    console.log("list:", list)
+    // function makeMarker(){
+    //     return
+    // }
+
+    // if (list.length > 0) {
+    //     for (let i = 0; i < list.length; i++) {
+    //         markStart = list[i].startTime
+    //         markStop = list[i].stopTime
+    //     }
+    // }
+
     return (
         <div>
-            {/* <input
-                type="range"
-                value={elapsedTime}
-            >
-            </input> */}
             <div
                 style={{
-                    width: "79em",
+                    width: "78.1em",
                     height: "1em",
-                    border: ".1em solid grey",
                     backgroundColor: "blue",
                     borderRadius: ".5em",
-                    margin: "1em",
-                    // position: "relative",
-
+                    margin: "1.01em",
                 }}
             >
-                {/*<Marker start={20} stop={40} />*/}
-                {/*<Marker start={65} stop={95} />*/}
+                {list.length > 0 && list.map((x, i) =>
+                    (
+                        <Marker key={i} start={i.startTime} stop={i.stopTime}/>
+                    )
+                )}
                 <div
                     style={{
-                        width: ".8em",
-                        height: ".5em",
-                        border: ".3em solid red",
+                        width: "0",
+                        height: ".8em",
+                        border: "solid red",
                         borderRadius: ".3em",
-                        left: `${elapsedTime}em`,
+                        left: `${currPos}em`,
                         position: "relative",
                         zIndex: 1002
                     }}

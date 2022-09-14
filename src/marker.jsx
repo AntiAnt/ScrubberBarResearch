@@ -9,8 +9,12 @@ export const Marker = ({start, stop}) => {
                 zIndex: 1000,
                 backgroundColor: "yellow",
                 width: `${width}em`,
+                // width: "1.257em",
+
                 left: `${start}em`,
-                height: ".8em",
+                // left: "2.753em",
+
+                height: "1em",
                 position: "absolute"
             }}
         >
