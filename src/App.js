@@ -11,9 +11,11 @@ const App = () => {
     const [stopTime, setStopTime] = useState(null);
     const [listOfStartStop, setListOfStartStop] = useState([]);
     const [currPos, setCurrPos] = useState(0);
+    const [recordState, setRecordState] = useState(false)
+    const globalWid = 79
 
     const HandleIncChange = (event) => {
-        const ratio = 78.1/event.target.duration;
+        const ratio = globalWid/event.target.duration;
         setCurrPos(ratio*event.target.currentTime)
     };
 
@@ -26,9 +28,13 @@ const App = () => {
 
     const HandleKeyUp = (event) => {
         if (event.key.toLowerCase() === "s" && stopTime === null){
+            setRecordState(false)
+            console.log(recordState)
             const newWindow = {
                 "startTime": startTime,
-                "stopTime": vidElem.current.currentTime
+                "stopTime": event.target.currentTime,
+                "startPos": (globalWid/event.target.duration) * startTime,
+                "stopPos": (globalWid/event.target.duration) * event.target.currentTime,
             };
             listOfStartStop.push(newWindow);
             setListOfStartStop([...listOfStartStop]);
@@ -37,10 +43,12 @@ const App = () => {
     }
 
     const HandleKeyDown = (event) => {
+        console.log(recordState)
         switch (event.key.toLowerCase()){
             case "s":
                 if (startTime === null){
                     setStartTime(vidElem.current.currentTime);
+                    setRecordState(true)
                 }
                 break;
             case "j":
@@ -53,10 +61,6 @@ const App = () => {
                 vidElem.current.currentTime += vidTimeControls
                 break;
         }
-    }
-
-    const handleTimer = () => {
-        setPlayState(!playState);
     }
 
     return (
@@ -75,27 +79,25 @@ const App = () => {
                             type="video/mp4"/>
                 </video>
 
-                    <dl>
-                        {listOfStartStop.length > 0 && listOfStartStop.map((x, i) =>
-                            (
-                                <div key={i}>
-                                    <h3><strong>Window {i + 1}</strong></h3>
-                                    <dt>Start Time </dt>
-                                    <dd>{x.startTime}</dd>
-                                    <dt>Stop Time</dt>
-                                    <dd>{x.stopTime}</dd>
-                                    <br/>
-                                </div>
-                            )
-                        )}
-                    </dl>
+                    {/*<dl>*/}
+                    {/*    {listOfStartStop.length > 0 && listOfStartStop.map((x, i) =>*/}
+                    {/*        (*/}
+                    {/*            <div key={i}>*/}
+                    {/*                <h3><strong>Window {i + 1}</strong></h3>*/}
+                    {/*                <dt>Start Time </dt>*/}
+                    {/*                <dd>{x.startTime}</dd>*/}
+                    {/*                <dt>Stop Time</dt>*/}
+                    {/*                <dd>{x.stopTime}</dd>*/}
+                    {/*                <br/>*/}
+                    {/*            </div>*/}
+                    {/*        )*/}
+                    {/*    )}*/}
+                    {/*</dl>*/}
             </div>
-            <ScrubberBar currPos={currPos} />
-            <button
-                onClick={handleTimer}
-            >
-                {playState ? "pause" : "play"}
-            </button>
+            <ScrubberBar currPos={currPos} globalWid={globalWid}/>
+            <label>
+                {recordState}
+            </label>
         </div>
         </listStartStop.Provider>
     );
