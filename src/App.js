@@ -2,17 +2,18 @@ import React, { useEffect, useState, useRef, createContext } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import listStartStop  from "./context";
 
-
-
 const App = () => {
     const vidElem = useRef(null)
-    const [playState, setPlayState] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [stopTime, setStopTime] = useState(null);
     const [listOfStartStop, setListOfStartStop] = useState([]);
     const [currPos, setCurrPos] = useState(0);
     const [recordState, setRecordState] = useState(false)
     const globalWid = 79
+
+    // const MakeLabel = () => {
+    //     console.log("Test")
+    // }
 
     const HandleIncChange = (event) => {
         const ratio = globalWid/event.target.duration;
@@ -29,7 +30,6 @@ const App = () => {
     const HandleKeyUp = (event) => {
         if (event.key.toLowerCase() === "s" && stopTime === null){
             setRecordState(false)
-            console.log(recordState)
             const newWindow = {
                 "startTime": startTime,
                 "stopTime": event.target.currentTime,
@@ -75,29 +75,19 @@ const App = () => {
                        preload="auto"
                        onTimeUpdate={HandleIncChange}
                 >
-                    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
                             type="video/mp4"/>
                 </video>
-
-                    {/*<dl>*/}
-                    {/*    {listOfStartStop.length > 0 && listOfStartStop.map((x, i) =>*/}
-                    {/*        (*/}
-                    {/*            <div key={i}>*/}
-                    {/*                <h3><strong>Window {i + 1}</strong></h3>*/}
-                    {/*                <dt>Start Time </dt>*/}
-                    {/*                <dd>{x.startTime}</dd>*/}
-                    {/*                <dt>Stop Time</dt>*/}
-                    {/*                <dd>{x.stopTime}</dd>*/}
-                    {/*                <br/>*/}
-                    {/*            </div>*/}
-                    {/*        )*/}
-                    {/*    )}*/}
-                    {/*</dl>*/}
             </div>
             <ScrubberBar currPos={currPos} globalWid={globalWid}/>
-            <label>
-                {recordState}
-            </label>
+
+            { recordState === true &&
+                <div>
+                    <h1>
+                        🔴 Time Frame Recording!
+                    </h1>
+                </div>
+            }
         </div>
         </listStartStop.Provider>
     );
