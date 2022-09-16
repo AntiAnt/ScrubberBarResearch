@@ -10,6 +10,8 @@ function App() {
   const [playState, setPlayState] = useState(false);
   const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
+  let startTime = 0;
+  let stopTime = 0;
   let currTime = null;
   const [listOfStartStop, setListOfStartStop] = useState([]);
   const increment = 50/videoDuration;
@@ -42,13 +44,23 @@ function App() {
     }
   }
 
-  /* function loop(e){
-    if (startTime !== null && stopTime !== null){
-      if(video.current.currentTime >= stopTime){
-        video.current.currentTime = startTime;
-      }
+  function setTimes(i){
+    console.log(i);
+    let interval = listOfStartStop[i];
+    startTime = interval["startPos"]/increment;
+    stopTime = interval["stopPos"]/increment;
+
+    if(video.current.currentTime >= stopTime){
+      video.current.currentTime = startTime;
     }
-  } */
+  }
+
+  function loop(){
+    console.log("Click")
+    if(video.current.currentTime >= stopTime){
+      video.current.currentTime = startTime;
+    }
+  }
 
   function clearPos(){
     setStartPos(0);
@@ -87,7 +99,7 @@ function App() {
             handleTimer();
             onPlay();
             }}>{playState ? "pause" : "play"}</button>
-             <ScrubberBar elapsedTime={elapsedTime} posList={listOfStartStop} />
+             <ScrubberBar elapsedTime={elapsedTime} posList={listOfStartStop} eventspot={setTimes} onTimeUpdate={loop}/>
           </div>
           <button id="startTimeButton" onClick={getStartTimeStamp}>Set Start Timestamp</button>
           <button id="stopTimeButton" onClick={getStopTimeStamp}>Set Stop Timestamp</button>
