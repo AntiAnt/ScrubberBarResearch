@@ -19,7 +19,8 @@ function App() {
   const [recordState, setRecordState] = useState(false)
 
   const HandleKeyUp = (event) => {
-    if (event.key.toLowerCase() === "s" && stopTime === null){
+    if (event.key.toLowerCase() === "s"){
+      getStopTimeStamp()
       setRecordState(false)
     }
   }
@@ -27,7 +28,8 @@ function App() {
   const HandleKeyDown = (event) => {
     switch (event.key.toLowerCase()){
       case "s":
-        onPlay()
+        getStartTimeStamp()
+        setRecordState(true)
         break;
       case "j":
         video.current.currentTime -= vidTimeControls
@@ -50,15 +52,12 @@ function App() {
   function getStartTimeStamp(){
     if(!!video){
       setStartPos(video.current.currentTime*increment);
-      console.log("Start Pos Set: "+video.current.currentTime);
-
     }
   }
 
   function getStopTimeStamp(){
     if(!!video){
       setStopPos(video.current.currentTime*increment);
-      console.log("Stop pos set: "+video.current.currentTime);
       const posPair = {
         "startPos":startPos,
         "stopPos":video.current.currentTime*increment
@@ -115,14 +114,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Video App</p>
           <video controls width="1000" ref={video} onKeyDown={HandleKeyDown} onKeyUp={HandleKeyUp} onTimeUpdate={() => {
           calcTime();
           loop();
         }}>
           <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4"></source>
           </video>
-
           <div id="video-controls">
             <button type="button" id="play-pause" onClick={() => {
             handleTimer();
@@ -136,11 +133,10 @@ function App() {
 
         { recordState === true &&
             <div>
-              <h1>
-                🔴 Time Frame Recording!
-              </h1>
+              <h1>🔴 Time Frame Recording!</h1>
             </div>
         }
+          <p>Scrub forward +5 second with "L" key and back -5 seconds with "J" key. Play/Pause with "K" key.</p>
       </header>
     </div>
   );

@@ -7,7 +7,6 @@ export const ScrubberBar = ({elapsedTime,posList,eventspot, onTimeUpdate={onTime
                 style={{
                     width: "50em",
                     height: "1em",
-                    border: ".1em solid grey",
                     backgroundColor: "lightgrey",
                     borderRadius: ".5em",
                     margin: "1em",
@@ -18,9 +17,9 @@ export const ScrubberBar = ({elapsedTime,posList,eventspot, onTimeUpdate={onTime
                 })}
                 <div
                     style={{
-                        width: ".8em",
-                        height: ".8em",
-                        border: ".3em solid grey",
+                        width: ".2em",
+                        backgroundColor: "red",
+                        height: "1em",
                         borderRadius: ".4em",
                         left: `${elapsedTime}em`,
                         position: "relative",
@@ -28,7 +27,7 @@ export const ScrubberBar = ({elapsedTime,posList,eventspot, onTimeUpdate={onTime
                     }}
                 >
                 </div>
-                
+
             </div>
         </div>
     )
