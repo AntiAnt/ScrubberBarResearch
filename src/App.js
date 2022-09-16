@@ -9,7 +9,7 @@ const App = () => {
     const [listOfStartStop, setListOfStartStop] = useState([]);
     const [currPos, setCurrPos] = useState(0);
     const [recordState, setRecordState] = useState(false)
-    const [mouseState, setMouseState] = useState(false)
+    // const [mouseState, setMouseState] = useState(false)
     const globalWid = 79
 
     // const MakeLabel = () => {
@@ -17,12 +17,7 @@ const App = () => {
     // }
 
     const HandleMouseEvents = (event) => {
-        if(event.type === "mousedown"){
-            setMouseState(true)
-        } else {
-            setMouseState(false)
-        }
-        console.log(mouseState)
+        console.log(event)
     }
 
     const HandleIncChange = (event) => {
@@ -105,15 +100,8 @@ const App = () => {
                 background: "black",
                 width: "5em",
                 height: "3em"
+            }} onClick={HandleMouseEvents} onDrag={HandleMouseEvents}>
 
-            }}>
-                <button style={{
-                    background: "black",
-                    width: "5em",
-                    height: "3em",
-                    position: "relative",
-                    // border: "none"
-                }} onMouseDown={HandleMouseEvents}></button>
             </div>
         </div>
         </listStartStop.Provider>
