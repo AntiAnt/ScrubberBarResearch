@@ -14,7 +14,7 @@ export const ScrubberBar = ({elapsedTime,posList,eventspot, onTimeUpdate={onTime
                 }}
             >
                 {posList.map((pos, i )=>{
-                    return <Marker start={pos.startPos} stop={pos.stopPos} onClick={eventspot} i={i} onTimeUpdate={onTimeUpdate} />
+                    return <Marker start={pos.startPos} stop={pos.stopPos} onClick={eventspot} i={i} onTimeUpdate={onTimeUpdate}/>
                 })}
                 <div
                     style={{

@@ -10,8 +10,8 @@ function App() {
   const [playState, setPlayState] = useState(false);
   const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
-  let startTime = 0;
-  let stopTime = 0;
+  const [stopTime, setStopTime] = useState(0);
+  const [startTime, setStartTime] = useState(0);
   let currTime = null;
   const [listOfStartStop, setListOfStartStop] = useState([]);
   const increment = 50/videoDuration;
@@ -45,20 +45,17 @@ function App() {
   }
 
   function setTimes(i){
-    console.log(i);
     let interval = listOfStartStop[i];
-    startTime = interval["startPos"]/increment;
-    stopTime = interval["stopPos"]/increment;
-
-    if(video.current.currentTime >= stopTime){
-      video.current.currentTime = startTime;
-    }
+    setStartTime(interval["startPos"]/increment);
+    setStopTime(interval["stopPos"]/increment);
+    video.current.currentTime = startTime;
   }
 
   function loop(){
-    console.log("Click")
-    if(video.current.currentTime >= stopTime){
-      video.current.currentTime = startTime;
+    if(startTime !== 0 && stopTime!== 0){
+      if(video.current.currentTime >= stopTime){
+        video.current.currentTime = startTime;
+      }
     }
   }
 
@@ -80,6 +77,12 @@ function App() {
     setElapsedTime(video.current.currentTime*increment);
   } 
 
+  function clearTime(){
+    setStartTime(0);
+    setStopTime(0);
+    video.current.currentTime = startTime;
+  }
+
   const handleTimer = () => {
     setPlayState(!playState);
   }
@@ -90,6 +93,7 @@ function App() {
         <p>Video App</p>
           <video controls width="1000" ref={video} onTimeUpdate={() => {
           calcTime();
+          loop();
         }}>
           <source src="flower.webm" type="video/webm"></source>
           </video>
@@ -103,6 +107,8 @@ function App() {
           </div>
           <button id="startTimeButton" onClick={getStartTimeStamp}>Set Start Timestamp</button>
           <button id="stopTimeButton" onClick={getStopTimeStamp}>Set Stop Timestamp</button>
+          <button id="clearLoopButton" onClick={clearTime}>Clear Loop</button>
+          
       </header>
     </div>
   );
