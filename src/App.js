@@ -27,7 +27,7 @@ function App() {
   const HandleKeyDown = (event) => {
     switch (event.key.toLowerCase()){
       case "s":
-        console.log("works")
+        onPlay()
         break;
       case "j":
         video.current.currentTime -= vidTimeControls
