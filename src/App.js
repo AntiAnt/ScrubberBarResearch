@@ -127,6 +127,8 @@ function App() {
       case ".25x":
         video.current.playbackRate = .25;
         break;
+      default:
+        video.current.playbackRate = 1.0
     }
   }
 
