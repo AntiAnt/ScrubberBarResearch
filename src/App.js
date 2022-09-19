@@ -2,7 +2,6 @@ import './App.css';
 import React,{useEffect,useState} from 'react';
 import { ScrubberBar } from "./scrubber-bar-component";
 
-
 function App() {
   const video = React.createRef(null);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -111,6 +110,26 @@ function App() {
     setPlayState(!playState);
   }
 
+  const SetPlayBackSpeed = (id) => {
+    switch (id){
+      case "1x":
+        video.current.playbackRate = 1.0;
+        break;
+      case "2x":
+        video.current.playbackRate = 2.0;
+        break;
+      case "4x":
+        video.current.playbackRate = 4;
+        break;
+      case ".5x":
+        video.current.playbackRate = .5;
+        break;
+      case ".25x":
+        video.current.playbackRate = .25;
+        break;
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -130,6 +149,16 @@ function App() {
           <button id="startTimeButton" onClick={getStartTimeStamp}>Set Start Timestamp</button>
           <button id="stopTimeButton" onClick={getStopTimeStamp}>Set Stop Timestamp</button>
           <button id="clearLoopButton" onClick={clearTime}>Clear Loop</button>
+          <div style={{
+            display:"inline"
+          }}>
+            <button id={"1x"} onClick={() => SetPlayBackSpeed("1x")}>1x speed</button>
+            <button id={"2x"} onClick={() => SetPlayBackSpeed("2x")}>2x speed</button>
+            <button id={".5"} onClick={() => SetPlayBackSpeed(".5x")}>.5x speed</button>
+            <button id={".25"} onClick={() => SetPlayBackSpeed(".25x")}>.25x speed</button>
+            <button id={"3x"} onClick={() => SetPlayBackSpeed("4x")}>4x speed</button>
+
+          </div>
 
         { recordState === true &&
             <div>

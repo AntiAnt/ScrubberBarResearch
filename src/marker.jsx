@@ -13,9 +13,8 @@ export const Marker = ({start,stop,onClick, i,onTimeUpdate}) => {
                 backgroundColor: "yellow",
                 width: `${stop - start}em`,
                 left: `${start}em`,
-                height: ".8em",
+                height: "1em",
                 position: "absolute",
-                border: "solid",
             }}
         >
         </div>
