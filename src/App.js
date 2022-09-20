@@ -199,6 +199,9 @@ function App() {
         <button id="clearLoopButton" onClick={clearTime}>
           Clear Loop or Press the "C" key
         </button>
+        <button></button>
+
+        //TODO make a slider for the speed of the video instead separate
         <div
           style={{
             display: "inline",
@@ -224,8 +227,8 @@ function App() {
         <button onClick={setModalIsOpenToTrue}>Click to Open Modal</button>
 
         <VidModal
-          modalState={modalIsOpen}
-          funcModalToFalse={setModalIsOpenToFalse}
+          modalStateIsOpen={modalIsOpen}
+          onModalClose={setModalIsOpenToFalse}
           HandleKeyDown={HandleKeyDown}
         />
 

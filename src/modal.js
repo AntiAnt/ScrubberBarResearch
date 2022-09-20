@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
-export function VidModal({ modalState, funcModalToFalse, HandleKeyDown }) {
+export function VidModal({ modalStateIsOpen, onModalClose, HandleKeyDown }) {
   return (
     <div onKeyDown={HandleKeyDown}>
       <ReactModal
-        isOpen={modalState}
+        isOpen={modalStateIsOpen}
         style={{
           overlay: {
             backgroundColor: "#282c34",
@@ -18,7 +18,7 @@ export function VidModal({ modalState, funcModalToFalse, HandleKeyDown }) {
             type="video/mp4"
           ></source>
         </video>
-        <button style={{ display: "block" }} onClick={funcModalToFalse}>
+        <button style={{ display: "block" }} onClick={onModalClose}>
           Close Modal
         </button>
       </ReactModal>
