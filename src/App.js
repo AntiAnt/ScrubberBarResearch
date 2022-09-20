@@ -60,9 +60,6 @@ function App() {
       case "x":
         setModalIsOpenToFalse();
         break;
-      case "a":
-        console.log("Works");
-        break;
     }
   };
 
