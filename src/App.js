@@ -1,6 +1,7 @@
 import './App.css';
 import React,{useEffect,useState} from 'react';
 import { ScrubberBar } from "./scrubber-bar-component";
+import { VidModal } from "./modal"
 
 function App() {
   const video = React.createRef(null);
@@ -16,6 +17,15 @@ function App() {
   const increment = 50/videoDuration;
   const vidTimeControls = 5;
   const [recordState, setRecordState] = useState(false)
+  const [modalIsOpen,setModalIsOpen] = useState(false);
+
+  const setModalIsOpenToTrue =()=>{
+    setModalIsOpen(true)
+  }
+
+  const setModalIsOpenToFalse =()=>{
+    setModalIsOpen(false)
+  }
 
   const HandleKeyUp = (event) => {
     if (event.key.toLowerCase() === "s"){
@@ -25,9 +35,11 @@ function App() {
   }
 
   const HandleKeyDown = (event) => {
-    switch (event.key.toLowerCase()){
+    switch (event.key.toLowerCase()) {
       case "s":
-        getStartTimeStamp()
+        if(recordState!==true){
+           setStartPos(video.current.currentTime*increment);
+        }
         setRecordState(true)
         break;
       case "j":
@@ -38,6 +50,18 @@ function App() {
         break;
       case "l":
         video.current.currentTime += vidTimeControls
+        break;
+      case "c":
+        clearTime()
+        break;
+      case "f":
+        setModalIsOpenToTrue()
+        break;
+      case "x":
+        setModalIsOpenToFalse()
+        break;
+      case "a":
+        console.log("Works")
         break;
     }
   }
@@ -135,7 +159,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-          <video controls width="1000" ref={video} onKeyDown={HandleKeyDown} onKeyUp={HandleKeyUp} onTimeUpdate={() => {
+          <video controls width="1000" ref={video} onKeyDown={HandleKeyDown} onKeyUp={HandleKeyUp}onTimeUpdate={() => {
           calcTime();
           loop();
         }}>
@@ -148,19 +172,22 @@ function App() {
             }}>{playState ? "pause" : "play"}</button>
              <ScrubberBar elapsedTime={elapsedTime} posList={listOfStartStop} eventspot={setTimes} onTimeUpdate={loop}/>
           </div>
-          <button id="startTimeButton" onClick={getStartTimeStamp}>Set Start Timestamp</button>
-          <button id="stopTimeButton" onClick={getStopTimeStamp}>Set Stop Timestamp</button>
-          <button id="clearLoopButton" onClick={clearTime}>Clear Loop</button>
+          <button id="startTimeButton" onClick={getStartTimeStamp}>Set Start Timestamp or Press "S" key</button>
+          <button id="stopTimeButton" onClick={getStopTimeStamp}>Set Stop Timestamp or Release "S" key</button>
+          <button id="clearLoopButton" onClick={clearTime}>Clear Loop or Press the "C" key</button>
           <div style={{
             display:"inline"
           }}>
             <button id={"1x"} onClick={() => SetPlayBackSpeed("1x")}>1x speed</button>
             <button id={"2x"} onClick={() => SetPlayBackSpeed("2x")}>2x speed</button>
-            <button id={".5"} onClick={() => SetPlayBackSpeed(".5x")}>.5x speed</button>
-            <button id={".25"} onClick={() => SetPlayBackSpeed(".25x")}>.25x speed</button>
+            <button id={".5x"} onClick={() => SetPlayBackSpeed(".5x")}>.5x speed</button>
+            <button id={".25x"} onClick={() => SetPlayBackSpeed(".25x")}>.25x speed</button>
             <button id={"3x"} onClick={() => SetPlayBackSpeed("4x")}>4x speed</button>
-
           </div>
+
+        <button onClick={setModalIsOpenToTrue}>Click to Open Modal</button>
+
+        <VidModal modalState={modalIsOpen} funcModalToFalse={setModalIsOpenToFalse} HandleKeyDown={HandleKeyDown}/>
 
         { recordState === true &&
             <div>

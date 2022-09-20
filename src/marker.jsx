@@ -9,7 +9,7 @@ export const Marker = ({start,stop,onClick, i,onTimeUpdate}) => {
           }}
         onTimeUpdate={onTimeUpdate}
             style={{
-                zIndex: 1000,
+                // zIndex: "2",
                 backgroundColor: "yellow",
                 width: `${stop - start}em`,
                 left: `${start}em`,
