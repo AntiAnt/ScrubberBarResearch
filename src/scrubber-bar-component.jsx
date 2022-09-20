@@ -40,7 +40,6 @@ export const ScrubberBar = ({
               borderRadius: ".4em",
               left: `${elapsedTime}em`,
               position: "absolute",
-              // zIndex: "3"
             }}
           ></div>
         </div>
