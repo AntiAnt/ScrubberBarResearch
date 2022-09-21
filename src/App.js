@@ -17,6 +17,8 @@ function App() {
   const vidTimeControls = 5;
   const [recordState, setRecordState] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const defaultPlaybackRate = 2.0
+  const defaultVidSource = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
@@ -65,6 +67,7 @@ function App() {
   };
 
   useEffect(() => {
+    video.current.playbackRate = defaultPlaybackRate;
     if (video.current) {
       setVideoDuration(video.current.duration);
     }
@@ -130,10 +133,9 @@ function App() {
     video.current.currentTime = startTime;
   }
 
-  // const handleTimer = () => {
-  //   setPlayState(!playState);
-  // };
-
+  function playTime() {
+    return video.current.currentTime;
+  }
   const SetPlayBackSpeed = (id) => {
     switch (id) {
       case "1x":
@@ -152,9 +154,11 @@ function App() {
         video.current.playbackRate = 0.25;
         break;
       default:
-        video.current.playbackRate = 1.0;
+        video.current.playbackRate = 2.0;
     }
   };
+
+
 
   return (
     <div className="App App-header">
@@ -170,7 +174,7 @@ function App() {
         }}
       >
         <source
-          src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+          src={defaultVidSource}
           type="video/mp4"
         ></source>
       </video>
@@ -195,7 +199,7 @@ function App() {
         Clear Loop or Press the "C" key
       </button>
       <button></button>
-      //TODO make a slider for the speed of the video instead separate buttons
+      {/*TODO make a slider for the speed of the video instead separate buttons*/}
       <div
         style={{
           display: "inline",
@@ -222,6 +226,8 @@ function App() {
         isOpen={modalIsOpen}
         onClose={setModalIsOpenToFalse}
         onKeyDown={HandleKeyDown}
+        playTime={playTime}
+        vidSrc={defaultVidSource}
       />
       {recordState === true && (
         <div>
