@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
-export function VidModal({ isOpen, onClose, playTime, vidSource}) {
+export function VidModal({ isOpen, onClose, playTime, vidSource }) {
   const modalVideo = React.createRef(null);
   const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
@@ -9,7 +9,7 @@ export function VidModal({ isOpen, onClose, playTime, vidSource}) {
   const increment = 50 / videoDuration;
   const vidTimeControls = 5;
 
-  function setOrigin(){
+  function setOrigin() {
     modalVideo.current.currentTime = playTime;
   }
 
@@ -45,11 +45,9 @@ export function VidModal({ isOpen, onClose, playTime, vidSource}) {
         modalVideo.current.currentTime -= vidTimeControls;
         break;
     }
-  }
+  };
 
-  function clearTime(){
-
-  }
+  function clearTime() {}
 
   return (
     <div>
@@ -61,22 +59,28 @@ export function VidModal({ isOpen, onClose, playTime, vidSource}) {
           },
         }}
       >
-        <video controls width="1000" onKeyDown={HandleKeyDown} onKeyUp={HandleKeyUp} ref={modalVideo}>
+        <video
+          controls
+          width="1000"
+          onKeyDown={HandleKeyDown}
+          onKeyUp={HandleKeyUp}
+          ref={modalVideo}
+        >
           <source
             src={vidSource}
             type="video/mp4"
-            onLoadedMetadata = {setOrigin}
+            onLoadedMetadata={setOrigin}
           ></source>
         </video>
         <button id="startTimeButton" onClick={getStartTimeStamp}>
-        Set Start Timestamp or Press "S" key
-      </button>
-      <button id="stopTimeButton" onClick={getStopTimeStamp}>
-        Set Stop Timestamp or Release "S" key
-      </button>
-      <button id="clearTimeButton" onClick={clearPos}>
-        Clear Time
-      </button>
+          Set Start Timestamp or Press "S" key
+        </button>
+        <button id="stopTimeButton" onClick={getStopTimeStamp}>
+          Set Stop Timestamp or Release "S" key
+        </button>
+        <button id="clearTimeButton" onClick={clearPos}>
+          Clear Time
+        </button>
         <button style={{ display: "block" }} onClick={onClose}>
           Close Modal
         </button>
