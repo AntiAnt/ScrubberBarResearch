@@ -34,6 +34,8 @@ function App() {
     }
   };
 
+  //TODO conditions to check if the modal is open and all the states of recording time frame feature
+  // in the background should be set to their default state
   const HandleKeyDown = (event) => {
     switch (event.key.toLowerCase()) {
       case "s":
