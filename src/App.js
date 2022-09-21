@@ -226,9 +226,9 @@ function App() {
         <button onClick={setModalIsOpenToTrue}>Click to Open Modal</button>
 
         <VidModal
-          modalStateIsOpen={modalIsOpen}
-          onModalClose={setModalIsOpenToFalse}
-          HandleKeyDown={HandleKeyDown}
+          isOpen={modalIsOpen}
+          onClose={setModalIsOpenToFalse}
+          onKeyDown={HandleKeyDown}
         />
 
         {recordState === true && (
