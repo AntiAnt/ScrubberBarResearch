@@ -35,7 +35,5 @@ export const ScrubberBar = ({elapsedTime,posList,eventspot, onTimeUpdate={onTime
                 
             </div>
         </div>
-      </div>
-    </div>
   );
 };
