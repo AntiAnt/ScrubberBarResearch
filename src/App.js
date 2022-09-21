@@ -154,8 +154,7 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App App-header" >
         <video
           controls
           width="1000"
@@ -201,7 +200,7 @@ function App() {
         </button>
         <button></button>
 
-        //TODO make a slider for the speed of the video instead separate
+        //TODO make a slider for the speed of the video instead separate buttons
         <div
           style={{
             display: "inline",
@@ -241,7 +240,6 @@ function App() {
           Scrub forward +5 second with "L" key and back -5 seconds with "J" key.
           Play/Pause with "K" key.
         </p>
-      </header>
     </div>
   );
 }
