@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
-export function VidModal({ isOpen, onClose, onKeyDown }) {
-  return (
+export function VidModal({ isOpen, onClose, onKeyDown, playTime, vidSrc }) {
+    return (
     <div onKeyDown={onKeyDown}>
       <ReactModal
         isOpen={isOpen}
@@ -12,7 +12,9 @@ export function VidModal({ isOpen, onClose, onKeyDown }) {
           },
         }}
       >
-        <video controls width="1000">
+        <video  controls width="1000"
+                autoPlay={true}
+        >
           <source
             src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
             type="video/mp4"
