@@ -17,8 +17,8 @@ function App() {
   const vidTimeControls = 5;
   const [recordState, setRecordState] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const defaultPlaybackRate = 2.0
-  const defaultVidSource = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+  const [defaultPlaybackRate, setDefaultPlaybackRate] = useState(2.0);
+  const [defaultVidSource, setDefaultVidSource] = useState("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4");
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
@@ -67,8 +67,8 @@ function App() {
   };
 
   useEffect(() => {
-    video.current.playbackRate = defaultPlaybackRate;
     if (video.current) {
+      video.current.playbackRate = defaultPlaybackRate;
       setVideoDuration(video.current.duration);
     }
   }, [video]);
@@ -133,9 +133,10 @@ function App() {
     video.current.currentTime = startTime;
   }
 
-  function playTime() {
+  const playTime = () => {
     return video.current.currentTime;
   }
+
   const SetPlayBackSpeed = (id) => {
     switch (id) {
       case "1x":
