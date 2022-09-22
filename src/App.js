@@ -159,8 +159,6 @@ function App() {
     }
   };
 
-
-
   return (
     <div className="App App-header">
       <video
@@ -173,6 +171,7 @@ function App() {
           calcTime();
           loop();
         }}
+        muted={true}
       >
         <source
           src={defaultVidSource}
