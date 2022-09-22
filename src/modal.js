@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
-export function VidModal({ isOpen, onClose, playTime, vidSource }) {
+export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
   const modalVideo = React.createRef(null);
   const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
@@ -10,7 +10,7 @@ export function VidModal({ isOpen, onClose, playTime, vidSource }) {
   const vidTimeControls = 5;
 
   function setOrigin() {
-    modalVideo.current.currentTime = playTime;
+    modalVideo.current.currentTime = setBackTime;
   }
 
   function clearPos() {
@@ -47,6 +47,8 @@ export function VidModal({ isOpen, onClose, playTime, vidSource }) {
     }
   };
 
+  console.log(setBackTime)
+
   function clearTime() {}
 
   return (
@@ -65,11 +67,11 @@ export function VidModal({ isOpen, onClose, playTime, vidSource }) {
           onKeyDown={HandleKeyDown}
           onKeyUp={HandleKeyUp}
           ref={modalVideo}
+          onLoadedMetadata={setOrigin}
         >
           <source
             src={vidSource}
             type="video/mp4"
-            onLoadedMetadata={setOrigin}
           ></source>
         </video>
         <button id="startTimeButton" onClick={getStartTimeStamp}>
