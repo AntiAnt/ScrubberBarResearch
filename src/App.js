@@ -19,13 +19,25 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [defaultPlaybackRate, setDefaultPlaybackRate] = useState(2.0);
   const [defaultVidSource, setDefaultVidSource] = useState("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4");
+  const [setBackTime, setSetBackTime] = useState(0)
+  const SETBACK_CURRENT_TIME = 5;
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
+    if (video.current.currentTime < 5){
+      setSetBackTime(video.current.startTime)
+    }
+    else {
+      const setBackTimeStamp = video.current.currentTime - SETBACK_CURRENT_TIME
+      setSetBackTime(setBackTimeStamp)
+    }
+      video.current.pause()
   };
 
   const setModalIsOpenToFalse = () => {
     setModalIsOpen(false);
+    setPlayState(true)
+    video.current.play()
   };
 
   const HandleKeyUp = (event) => {
@@ -227,7 +239,9 @@ function App() {
         onClose={setModalIsOpenToFalse}
         onKeyDown={HandleKeyDown}
         playTime={playTime}
-        vidSrc={defaultVidSource}
+        vidSource={defaultVidSource}
+        setBackTime = {setBackTime}
+
       />
       {recordState === true && (
         <div>
