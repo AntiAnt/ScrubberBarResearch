@@ -7,43 +7,42 @@ export const ScrubberBar = ({
   onTimeUpdate = { onTimeUpdate },
 }) => {
   return (
-    <div
-      style={{
-        position: "relative",
-      }}
-    >
+    <div>
       <div
         style={{
           width: "50em",
           height: "1em",
-          border: ".1em solid grey",
           backgroundColor: "lightgrey",
-          borderRadius: ".5em",
           margin: "1em",
         }}
       >
-        {posList.map((pos, i) => {
-          return (
-            <Marker
-              start={pos.startPos}
-              stop={pos.stopPos}
-              onClick={eventspot}
-              i={i}
-              onTimeUpdate={onTimeUpdate}
-            />
-          );
-        })}
         <div
           style={{
-            width: "0",
-            height: "2em",
-            border: "solid red",
-            left: `${elapsedTime}em`,
-            top: "-.5em",
-            position: "absolute",
-            zIndex: 1002,
+            position: "relative",
           }}
-        ></div>
+        >
+          {posList.map((pos, i) => {
+            return (
+              <Marker
+                key={i}
+                start={pos.startPos}
+                stop={pos.stopPos}
+                onClick={eventspot}
+                onTimeUpdate={onTimeUpdate}
+              />
+            );
+          })}
+          <div
+            style={{
+              width: ".2em",
+              backgroundColor: "red",
+              height: "1em",
+              borderRadius: ".4em",
+              left: `${elapsedTime}em`,
+              position: "absolute",
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./App";
 
 export const Marker = ({ start, stop, onClick, i, onTimeUpdate }) => {
-  const [width, setWidth] = useState(stop - start);
   return (
     <div
       onClick={() => {
@@ -10,13 +9,11 @@ export const Marker = ({ start, stop, onClick, i, onTimeUpdate }) => {
       }}
       onTimeUpdate={onTimeUpdate}
       style={{
-        zIndex: 1000,
         backgroundColor: "yellow",
-        width: `${width}em`,
+        width: `${stop - start}em`,
         left: `${start}em`,
-        height: ".8em",
+        height: "1em",
         position: "absolute",
-        border: "solid",
       }}
     ></div>
   );
