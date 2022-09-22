@@ -21,10 +21,11 @@ export const ScrubberBar = ({
             position: "relative",
           }}
         >
-          {posList.map((pos, i) => {
+          {posList.map((pos, index) => {
             return (
               <Marker
-                key={i}
+                key={index}
+                segmentIndex={index}
                 start={pos.startPos}
                 stop={pos.stopPos}
                 onClick={eventspot}

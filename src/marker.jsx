@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./App";
 
-export const Marker = ({ start, stop, onClick, i, onTimeUpdate }) => {
+export const Marker = ({ start, stop, onClick, segmentIndex, onTimeUpdate }) => {
   return (
     <div
       onClick={() => {
-        onClick(i);
+        onClick(segmentIndex);
       }}
       onTimeUpdate={onTimeUpdate}
       style={{
