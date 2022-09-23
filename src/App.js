@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import { VidModal } from "./modal";
+import { TimeFrameDataStruct } from "./TimeFrameDataStruct";
 
 function App() {
   const video = React.createRef(null);
@@ -18,26 +19,29 @@ function App() {
   const [recordState, setRecordState] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [defaultPlaybackRate, setDefaultPlaybackRate] = useState(2.0);
-  const [defaultVidSource, setDefaultVidSource] = useState("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4");
-  const [setBackTime, setSetBackTime] = useState(0)
+  const [defaultVidSource, setDefaultVidSource] = useState(
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+  );
+  const [setBackTime, setSetBackTime] = useState(0);
   const SETBACK_CURRENT_TIME = 5;
+  const newTimeFrame = new TimeFrameDataStruct({ startTime: 5, stopTime: 10, increment: increment });
+  const [startTimeAtKeyPress, setStartTimeAtKeyPress] = useState(0);
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
-    if (video.current.currentTime < SETBACK_CURRENT_TIME){
-      setSetBackTime(video.current.startTime)
+    if (video.current.currentTime < SETBACK_CURRENT_TIME) {
+      setSetBackTime(video.current.startTime);
+    } else {
+      const setBackTimeStamp = video.current.currentTime - SETBACK_CURRENT_TIME;
+      setSetBackTime(setBackTimeStamp);
     }
-    else {
-      const setBackTimeStamp = video.current.currentTime - SETBACK_CURRENT_TIME
-      setSetBackTime(setBackTimeStamp)
-    }
-      video.current.pause()
+    video.current.pause();
   };
 
   const setModalIsOpenToFalse = () => {
     setModalIsOpen(false);
-    setPlayState(true)
-    video.current.play()
+    setPlayState(true);
+    video.current.play();
   };
 
   const HandleKeyUp = (event) => {
@@ -98,6 +102,7 @@ function App() {
         startPos: startPos,
         stopPos: video.current.currentTime * increment,
       };
+      const obj = new TimeFrameDataStruct({start: ,
       listOfStartStop.push(posPair);
       setListOfStartStop([...listOfStartStop]);
       clearPos();
@@ -181,10 +186,7 @@ function App() {
         }}
         muted={true}
       >
-        <source
-          src={defaultVidSource}
-          type="video/mp4"
-        ></source>
+        <source src={defaultVidSource} type="video/mp4"></source>
       </video>
       <div id="video-controls">
         <button type="button" id="play-pause" onClick={handlePlayClick}>
@@ -235,8 +237,7 @@ function App() {
         onClose={setModalIsOpenToFalse}
         onKeyDown={HandleKeyDown}
         vidSource={defaultVidSource}
-        setBackTime = {setBackTime}
-
+        setBackTime={setBackTime}
       />
       {recordState === true && (
         <div>

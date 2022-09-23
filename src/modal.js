@@ -47,8 +47,6 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
     }
   };
 
-  console.log(setBackTime)
-
   function clearTime() {}
 
   return (
