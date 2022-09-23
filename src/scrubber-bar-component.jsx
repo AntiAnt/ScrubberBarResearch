@@ -4,7 +4,7 @@ export const ScrubberBar = ({
   elapsedTime,
   posList,
   eventspot,
-  onTimeUpdate = { onTimeUpdate },
+  onTimeUpdate,
 }) => {
   return (
     <div>
@@ -21,13 +21,13 @@ export const ScrubberBar = ({
             position: "relative",
           }}
         >
-          {posList.map((pos, index) => {
+          {!!posList && posList.map((pos, index) => {
             return (
               <Marker
                 key={index}
                 segmentIndex={index}
-                start={pos.getStartTimePos()}
-                stop={pos.getStopTimePos()}
+                start={pos.startPos}
+                stop={pos.stopPos}
                 onClick={eventspot}
                 onTimeUpdate={onTimeUpdate}
               />
