@@ -24,7 +24,7 @@ function App() {
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
-    if (video.current.currentTime < 5){
+    if (video.current.currentTime < SETBACK_CURRENT_TIME){
       setSetBackTime(video.current.startTime)
     }
     else {
@@ -145,10 +145,6 @@ function App() {
     video.current.currentTime = startTime;
   }
 
-  const playTime = () => {
-    return video.current.currentTime;
-  }
-
   const SetPlayBackSpeed = (id) => {
     switch (id) {
       case "1x":
@@ -238,7 +234,6 @@ function App() {
         isOpen={modalIsOpen}
         onClose={setModalIsOpenToFalse}
         onKeyDown={HandleKeyDown}
-        playTime={playTime}
         vidSource={defaultVidSource}
         setBackTime = {setBackTime}
 
