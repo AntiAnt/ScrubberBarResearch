@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import ReactModal from "react-modal";
 
 export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
@@ -6,8 +6,15 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
   const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
-  const increment = 50 / videoDuration;
+  const [increment, setIncrement] = useState(0);
   const vidTimeControls = 5;
+
+  useEffect(() => {
+    if (modalVideo.current) {
+      setVideoDuration(modalVideo.current.duration);
+      setIncrement(modalVideo.current.duration / 50);
+    }
+  }, [modalVideo]);
 
   function setOrigin() {
     modalVideo.current.currentTime = setBackTime;
@@ -20,13 +27,16 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
 
   function getStartTimeStamp() {
     if (!!modalVideo) {
+      console.log("increment"+increment);
       setStartPos(modalVideo.current.currentTime * increment);
+      console.log("start: "+ modalVideo.current.currentTime * increment);
     }
   }
 
   function getStopTimeStamp() {
     if (!!modalVideo) {
       setStopPos(modalVideo.current.currentTime * increment);
+      console.log("stop: "+modalVideo.current.currentTime * increment);
     }
   }
 
@@ -68,7 +78,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
           onLoadedMetadata={setOrigin}
         >
           <source
-            src={vidSource}
+            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
             type="video/mp4"
           ></source>
         </video>
