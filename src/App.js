@@ -134,8 +134,7 @@ function App() {
     }
   }
 
-  function calcTime() {
-    // Calculate the slider value
+  function calcPosition() {
     setElapsedTime(video.current.currentTime * increment);
   }
 
@@ -176,7 +175,7 @@ function App() {
         onKeyDown={HandleKeyDown}
         onKeyUp={HandleKeyUp}
         onTimeUpdate={() => {
-          calcTime();
+          calcPosition();
           loop();
         }}
         muted={true}
