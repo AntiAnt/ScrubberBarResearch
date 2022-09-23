@@ -2,12 +2,17 @@ import { useState } from "react";
 import "./App";
 
 export const Marker = ({ start, stop, onClick, segmentIndex, onTimeUpdate }) => {
+  function handleTimeUpdate(){
+    if(!!onTimeUpdate){
+      onTimeUpdate();
+    }
+  }
   return (
     <div
       onClick={() => {
-        onClick(segmentIndex);
+        !!onClick && onClick(segmentIndex);
       }}
-      onTimeUpdate={onTimeUpdate}
+      onTimeUpdate={handleTimeUpdate}
       style={{
         backgroundColor: "yellow",
         width: `${stop - start}em`,
