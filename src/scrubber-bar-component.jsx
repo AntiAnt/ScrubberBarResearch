@@ -26,8 +26,8 @@ export const ScrubberBar = ({
               <Marker
                 key={index}
                 segmentIndex={index}
-                start={pos.startPos}
-                stop={pos.stopPos}
+                start={pos.getStartTimePos()}
+                stop={pos.getStopTimePos()}
                 onClick={eventspot}
                 onTimeUpdate={onTimeUpdate}
               />

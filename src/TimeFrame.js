@@ -1,8 +1,9 @@
-export class TimeFrameDataStruct {
+export class TimeFrame {
   constructor(obj) {
     this.startTime = obj.startTime;
     this.stopTime = obj.stopTime;
-    this.increment = obj.increment;
+    this.increment = obj.increment
+    this.description = obj.description;
   }
 
   printTimeFrames() {
@@ -16,4 +17,5 @@ export class TimeFrameDataStruct {
   getStopTimePos() {
       return this.stopTime * this.increment;
   }
+
 }
