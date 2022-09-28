@@ -1,4 +1,5 @@
 import React, { useEffect,useState } from "react";
+import { ScrubberBar } from "./scrubber-bar-component";
 import ReactModal from "react-modal";
 
 export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
@@ -9,9 +10,8 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [playState, setPlayState] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
-  const [increment, setIncrement] = useState(0);
   const vidTimeControls = 5;
-  setIncrement(50 / videoDuration);
+  const increment = 50 / videoDuration;
 
   useEffect(() => {
     if (modalVideo.current) {
@@ -76,7 +76,6 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
         break;
     }
   };
-  function clearTime() {}
 
   return (
     <div>
@@ -90,7 +89,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
       >
         <video
           controls
-          width="1000"
+          width="800"
           onKeyDown={HandleKeyDown}
           onKeyUp={HandleKeyUp}
           ref={modalVideo}
