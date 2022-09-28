@@ -12,7 +12,6 @@ function App() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [playState, setPlayState] = useState(false);
-  const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
   const [stopTime, setStopTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
@@ -52,7 +51,7 @@ function App() {
 
   const HandleKeyUp = (event) => {
     if (event.key.toLowerCase() === "s") {
-      getStopTimeStamp();
+      // getStopTimeStamp();
       setRecordState(false);
     }
   };
@@ -99,25 +98,6 @@ function App() {
     setVideoDuration(video.current.duration);
   }
 
-  function getStartTimeStamp() {
-    if (!!video) {
-      setStartPos(video.current.currentTime * increment);
-    }
-  }
-
-  function getStopTimeStamp() {
-    if (!!video) {
-      // setStopPos(video.current.currentTime * increment);
-      // const posPair = {
-      //   startPos: startPos,
-      //   stopPos: video.current.currentTime * increment,
-      // };
-      // listOfStartStop.push(posPair);
-      // setListOfStartStop([...listOfStartStop]);
-      // clearPos();
-    }
-  }
-
   function setTimes(i) {
     let interval = listOfStartStop[i];
     setStartTime(interval["startPos"] / increment);
@@ -131,11 +111,6 @@ function App() {
         video.current.currentTime = startTime;
       }
     }
-  }
-
-  function clearPos() {
-    setStartPos(0);
-    setStopPos(0);
   }
 
   function handlePlayClick() {
@@ -223,16 +198,9 @@ function App() {
           onTimeUpdate={loop}
         />
       </div>
-      <button id="startTimeButton" onClick={getStartTimeStamp}>
-        Set Start Timestamp or Press "S" key
-      </button>
-      <button id="stopTimeButton" onClick={getStopTimeStamp}>
-        Set Stop Timestamp or Release "S" key
-      </button>
       <button id="clearLoopButton" onClick={clearTime}>
         Clear Loop or Press the "C" key
       </button>
-      <button></button>
       {/*TODO make a slider for the speed of the video instead separate buttons*/}
       <div
         style={{
@@ -277,6 +245,7 @@ function App() {
         addNewTimeFrame(testObj)
       }}>Click</button>
     </div>
+
   );
 }
 export default App;
