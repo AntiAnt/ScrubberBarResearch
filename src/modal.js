@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import ReactModal from "react-modal";
 
-export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
+export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   const modalVideo = React.createRef(null);
   const [stopTime, setStopTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
@@ -10,6 +10,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [playState, setPlayState] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
+  //const [description, setDescription] = useState("");
   const vidTimeControls = 5;
   const increment = 50 / videoDuration;
 
@@ -40,20 +41,17 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
   function clearTime() {
     setStartTime(0);
     setStopTime(0);
-    console.log("start: "+startTime+"stop: "+stopTime);
   }
 
   function getStartTimeStamp() {
     if (!!modalVideo) {
       setStartTime(modalVideo.current.currentTime);
-      console.log("start time: "+ modalVideo.current.currentTime);
     }
   }
 
   function getStopTimeStamp() {
     if (!!modalVideo) {
       setStopTime(modalVideo.current.currentTime);
-      console.log("start time:"+startTime+"stop time: "+modalVideo.current.currentTime);
     }
   }
 
@@ -76,6 +74,10 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
         break;
     }
   };
+
+  function exportTimeframe(){
+    onCreate({"startTime":startTime,"stopTime":stopTime, "description":document.getElementById('descrip')});
+  }
 
   return (
     <div>
@@ -107,7 +109,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
         </div>
       )}
         <div id="video-controls">
-        <button type="button" id="play-pause" onClick={handlePlayClick}>
+        <button style={{ display: "block" }} type="button" id="play-pause" onClick={handlePlayClick}>
           {playState ? "pause" : "play"}
         </button>
         <ScrubberBar
@@ -121,7 +123,17 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
           Set Stop Timestamp or Release "S" key
         </button>
         <button id="clearTimeButton" onClick={clearTime}>
-          Clear Time
+          Clear Timeframe
+        </button>
+        <form>
+          <label for="description">Enter a description for the timeframe: </label>
+          <input type="text" id="descrip"></input>
+        </form>
+        <button style={{ display: "block" }} onClick={() => {
+          exportTimeframe();
+          onClose();
+        }}>
+          Submit Timeframe and Decription
         </button>
         <button style={{ display: "block" }} onClick={onClose}>
           Close Modal
