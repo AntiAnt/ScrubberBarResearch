@@ -46,12 +46,14 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   function getStartTimeStamp() {
     if (!!modalVideo) {
       setStartTime(modalVideo.current.currentTime);
+      setRecordState(true);
     }
   }
 
   function getStopTimeStamp() {
     if (!!modalVideo) {
       setStopTime(modalVideo.current.currentTime);
+      setRecordState(false);
     }
   }
 
