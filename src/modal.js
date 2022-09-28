@@ -76,7 +76,15 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   };
 
   function exportTimeframe(){
-    onCreate({"startTime":startTime,"stopTime":stopTime, "description":document.getElementById('descrip')});
+    onCreate({"startTime":startTime,"stopTime":stopTime, "description":document.getElementById('descrip').value});
+  }
+
+  function clearStart(){
+    setStartTime(0);
+  }
+
+  function clearStop(){
+    setStopTime(0);
   }
 
   return (
@@ -122,9 +130,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
         <button id="stopTimeButton" onClick={getStopTimeStamp}>
           Set Stop Timestamp or Release "S" key
         </button>
-        <button id="clearTimeButton" onClick={clearTime}>
-          Clear Timeframe
-        </button>
+        <br></br>
         <form>
           <label for="description">Enter a description for the timeframe: </label>
           <input type="text" id="descrip"></input>
@@ -134,6 +140,16 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
           onClose();
         }}>
           Submit Timeframe and Decription
+        </button>
+        <br></br>
+        <button id="clearStartTimeButton" onClick={clearStart}>
+          Clear Start Timestamp
+        </button>
+        <button id="clearStopTimeButton" onClick={clearStop}>
+          Clear Stop Timestamp
+        </button>
+        <button id="clearTimeButton" onClick={clearTime}>
+          Clear Timeframe
         </button>
         <button style={{ display: "block" }} onClick={onClose}>
           Close Modal
