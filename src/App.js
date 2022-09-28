@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import { VidModal } from "./modal";
 import { TimeFrame } from "./TimeFrame";
-
+// import Rows from "./timeframetable"
 
 const testObj = new TimeFrame({})
 
@@ -275,6 +275,9 @@ function App() {
       <button onClick={() => {
         addNewTimeFrame(testObj)
       }}>Click</button>
+
+      {/*<Row/>*/}
+
     </div>
   );
 }
