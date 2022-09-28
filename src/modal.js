@@ -10,6 +10,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [playState, setPlayState] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
+  //const [description, setDescription] = useState("");
   const vidTimeControls = 5;
   const increment = 50 / videoDuration;
 
@@ -40,20 +41,17 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   function clearTime() {
     setStartTime(0);
     setStopTime(0);
-    console.log("start: "+startTime+"stop: "+stopTime);
   }
 
   function getStartTimeStamp() {
     if (!!modalVideo) {
       setStartTime(modalVideo.current.currentTime);
-      console.log("start time: "+ modalVideo.current.currentTime);
     }
   }
 
   function getStopTimeStamp() {
     if (!!modalVideo) {
       setStopTime(modalVideo.current.currentTime);
-      console.log("start time:"+startTime+"stop time: "+modalVideo.current.currentTime);
     }
   }
 
@@ -76,9 +74,11 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
         break;
     }
   };
+
   function exportTimeframe(){
-    onCreate({"startTime":startTime,"stopTime":stopTime, "description":"abc"});
+    onCreate({"startTime":startTime,"stopTime":stopTime, "description":document.getElementById('descrip')});
   }
+
   return (
     <div>
       <ReactModal
@@ -123,13 +123,17 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
           Set Stop Timestamp or Release "S" key
         </button>
         <button id="clearTimeButton" onClick={clearTime}>
-          Clear Time
+          Clear Timeframe
         </button>
+        <form>
+          <label for="description">Enter a description for the timeframe: </label>
+          <input type="text" id="descrip"></input>
+        </form>
         <button style={{ display: "block" }} onClick={() => {
-          onClose();
           exportTimeframe();
+          onClose();
         }}>
-          Finalize Timeframe
+          Submit Timeframe and Decription
         </button>
         <button style={{ display: "block" }} onClick={onClose}>
           Close Modal
