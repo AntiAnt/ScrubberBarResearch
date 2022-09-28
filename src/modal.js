@@ -10,7 +10,6 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [playState, setPlayState] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
-  //const [description, setDescription] = useState("");
   const vidTimeControls = 5;
   const increment = 50 / videoDuration;
 
@@ -79,6 +78,8 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
 
   function exportTimeframe(){
     onCreate({"startTime":startTime,"stopTime":stopTime, "description":document.getElementById('descrip').value});
+    cleanModal();
+    onClose();
   }
 
   function clearStart(){
@@ -145,8 +146,6 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
         </form>
         <button style={{ display: "block" }} onClick={() => {
           exportTimeframe();
-          cleanModal();
-          onClose();
         }}>
           Submit Timeframe and Decription
         </button>
