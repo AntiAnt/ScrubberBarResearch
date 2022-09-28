@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import ReactModal from "react-modal";
 
-export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
+export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
   const modalVideo = React.createRef(null);
   const [stopTime, setStopTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
@@ -76,7 +76,9 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
         break;
     }
   };
-
+  function exportTimeframe(){
+    onCreate({"startTime":startTime,"stopTime":stopTime, "description":"abc"});
+  }
   return (
     <div>
       <ReactModal
@@ -107,7 +109,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
         </div>
       )}
         <div id="video-controls">
-        <button type="button" id="play-pause" onClick={handlePlayClick}>
+        <button style={{ display: "block" }} type="button" id="play-pause" onClick={handlePlayClick}>
           {playState ? "pause" : "play"}
         </button>
         <ScrubberBar
@@ -122,6 +124,12 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime }) {
         </button>
         <button id="clearTimeButton" onClick={clearTime}>
           Clear Time
+        </button>
+        <button style={{ display: "block" }} onClick={() => {
+          onClose();
+          exportTimeframe();
+        }}>
+          Finalize Timeframe
         </button>
         <button style={{ display: "block" }} onClick={onClose}>
           Close Modal
