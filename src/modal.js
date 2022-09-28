@@ -89,6 +89,12 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
     setStopTime(0);
   }
 
+  function cleanModal(){
+    setStartTime(0);
+    setStopTime(0);
+    document.getElementById('descrip').value ='';
+  }
+
   return (
     <div>
       <ReactModal
@@ -139,6 +145,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
         </form>
         <button style={{ display: "block" }} onClick={() => {
           exportTimeframe();
+          cleanModal();
           onClose();
         }}>
           Submit Timeframe and Decription
