@@ -2,21 +2,20 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import { VidModal } from "./modal";
-import { TimeFrame } from "./TimeFrame";
-
-
-const testObj = new TimeFrame({})
+import { TimeFrameDataStruct } from "./TimeFrameDataStruct";
 
 function App() {
   const video = React.createRef(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [playState, setPlayState] = useState(false);
+  const [stopPos, setStopPos] = useState(0);
   const [startPos, setStartPos] = useState(0);
   const [stopTime, setStopTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [listOfStartStop, setListOfStartStop] = useState([]);
-
+  const increment = 50 / videoDuration;
+  const vidTimeControls = 5;
   const [recordState, setRecordState] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [defaultPlaybackRate, setDefaultPlaybackRate] = useState(2.0);
@@ -24,13 +23,9 @@ function App() {
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
   );
   const [setBackTime, setSetBackTime] = useState(0);
-
-
-  const [startTimeAtKeyPress, setStartTimeAtKeyPress] = useState(0);
-
-  const increment = 50 / videoDuration;
-  const vidTimeControls = 5;
   const SETBACK_CURRENT_TIME = 5;
+  const newTimeFrame = new TimeFrameDataStruct({ startTime: 5, stopTime: 10, increment: increment });
+  const [startTimeAtKeyPress, setStartTimeAtKeyPress] = useState(0);
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
@@ -51,7 +46,7 @@ function App() {
 
   const HandleKeyUp = (event) => {
     if (event.key.toLowerCase() === "s") {
-      // getStopTimeStamp();
+      getStopTimeStamp();
       setRecordState(false);
     }
   };
@@ -63,7 +58,6 @@ function App() {
       case "s":
         if (recordState !== true) {
           setStartPos(video.current.currentTime * increment);
-          setStartTimeAtKeyPress(video.current.currentTime)
         }
         setRecordState(true);
         break;
@@ -91,11 +85,28 @@ function App() {
   useEffect(() => {
     if (video.current) {
       video.current.playbackRate = defaultPlaybackRate;
+      setVideoDuration(video.current.duration);
     }
   }, [video]);
 
-  function setVidDuration () {
-    setVideoDuration(video.current.duration);
+  function getStartTimeStamp() {
+    if (!!video) {
+      setStartPos(video.current.currentTime * increment);
+    }
+  }
+
+  function getStopTimeStamp() {
+    if (!!video) {
+      setStopPos(video.current.currentTime * increment);
+      const posPair = {
+        startPos: startPos,
+        stopPos: video.current.currentTime * increment,
+      };
+      const obj = new TimeFrameDataStruct({start: ,
+      listOfStartStop.push(posPair);
+      setListOfStartStop([...listOfStartStop]);
+      clearPos();
+    }
   }
 
   function setTimes(i) {
@@ -111,6 +122,11 @@ function App() {
         video.current.currentTime = startTime;
       }
     }
+  }
+
+  function clearPos() {
+    setStartPos(0);
+    setStopPos(0);
   }
 
   function handlePlayClick() {
@@ -155,20 +171,6 @@ function App() {
     }
   };
 
-  const addNewTimeFrame = (newTimeFrameObj) => {
-    // const newTimeFrameObj = new TimeFrame(obj)
-    newTimeFrameObj.stopTime = 15;
-    newTimeFrameObj.startTime = 5;
-
-    newTimeFrameObj.increment = increment;
-    listOfStartStop.push(newTimeFrameObj);
-    setListOfStartStop([...listOfStartStop]);
-  }
-
-  console.log('viDur:', videoDuration)
-  console.log("inc:", increment)
-  console.log(listOfStartStop)
-
   return (
     <div className="App App-header">
       <video
@@ -182,7 +184,6 @@ function App() {
           loop();
         }}
         muted={true}
-        onDurationChange={setVidDuration}
       >
         <source src={defaultVidSource} type="video/mp4"></source>
       </video>
@@ -197,9 +198,16 @@ function App() {
           onTimeUpdate={loop}
         />
       </div>
+      <button id="startTimeButton" onClick={getStartTimeStamp}>
+        Set Start Timestamp or Press "S" key
+      </button>
+      <button id="stopTimeButton" onClick={getStopTimeStamp}>
+        Set Stop Timestamp or Release "S" key
+      </button>
       <button id="clearLoopButton" onClick={clearTime}>
         Clear Loop or Press the "C" key
       </button>
+      <button></button>
       {/*TODO make a slider for the speed of the video instead separate buttons*/}
       <div
         style={{
@@ -229,7 +237,6 @@ function App() {
         onKeyDown={HandleKeyDown}
         vidSource={defaultVidSource}
         setBackTime={setBackTime}
-        onCreate={addNewTimeFrame}
       />
       {recordState === true && (
         <div>
@@ -240,11 +247,7 @@ function App() {
         Scrub forward +5 second with "L" key and back -5 seconds with "J" key.
         Play/Pause with "K" key.
       </p>
-      <button onClick={() => {
-        addNewTimeFrame(testObj)
-      }}>Click</button>
     </div>
-
   );
 }
 export default App;

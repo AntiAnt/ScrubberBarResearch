@@ -147,7 +147,7 @@ export function VidModal({ isOpen, onClose, vidSource, setBackTime,onCreate}) {
         <button style={{ display: "block" }} onClick={() => {
           exportTimeframe();
         }}>
-          Submit Timeframe and Decription
+          Submit Timeframe and Description
         </button>
         <br></br>
         <button id="clearStartTimeButton" onClick={clearStart}>
