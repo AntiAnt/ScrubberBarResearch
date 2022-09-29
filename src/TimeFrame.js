@@ -18,4 +18,12 @@ export class TimeFrame {
       return this.stopTime * this.increment;
   }
 
+  getStartTime(){
+    return this.startTime
+  }
+
+  getStopTime(){
+    return this.stopTime
+  }
+
 }
