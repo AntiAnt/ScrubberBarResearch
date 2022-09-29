@@ -2,7 +2,10 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { ScrubberBar } from "./scrubber-bar-component";
 import { VidModal } from "./modal";
-import { TimeFrameDataStruct } from "./TimeFrameDataStruct";
+import { TimeFrame } from "./TimeFrame";
+
+
+const testObj = new TimeFrame({})
 
 function App() {
   const video = React.createRef(null);
@@ -14,8 +17,7 @@ function App() {
   const [stopTime, setStopTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [listOfStartStop, setListOfStartStop] = useState([]);
-  const increment = 50 / videoDuration;
-  const vidTimeControls = 5;
+
   const [recordState, setRecordState] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [defaultPlaybackRate, setDefaultPlaybackRate] = useState(2.0);
@@ -23,9 +25,13 @@ function App() {
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
   );
   const [setBackTime, setSetBackTime] = useState(0);
-  const SETBACK_CURRENT_TIME = 5;
-  const newTimeFrame = new TimeFrameDataStruct({ startTime: 5, stopTime: 10, increment: increment });
+
+
   const [startTimeAtKeyPress, setStartTimeAtKeyPress] = useState(0);
+
+  const increment = 50 / videoDuration;
+  const vidTimeControls = 5;
+  const SETBACK_CURRENT_TIME = 5;
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
@@ -58,6 +64,7 @@ function App() {
       case "s":
         if (recordState !== true) {
           setStartPos(video.current.currentTime * increment);
+          setStartTimeAtKeyPress(video.current.currentTime)
         }
         setRecordState(true);
         break;
@@ -85,9 +92,12 @@ function App() {
   useEffect(() => {
     if (video.current) {
       video.current.playbackRate = defaultPlaybackRate;
-      setVideoDuration(video.current.duration);
     }
   }, [video]);
+
+  function setVidDuration () {
+    setVideoDuration(video.current.duration);
+  }
 
   function getStartTimeStamp() {
     if (!!video) {
@@ -97,15 +107,14 @@ function App() {
 
   function getStopTimeStamp() {
     if (!!video) {
-      setStopPos(video.current.currentTime * increment);
-      const posPair = {
-        startPos: startPos,
-        stopPos: video.current.currentTime * increment,
-      };
-      const obj = new TimeFrameDataStruct({start: ,
-      listOfStartStop.push(posPair);
-      setListOfStartStop([...listOfStartStop]);
-      clearPos();
+      // setStopPos(video.current.currentTime * increment);
+      // const posPair = {
+      //   startPos: startPos,
+      //   stopPos: video.current.currentTime * increment,
+      // };
+      // listOfStartStop.push(posPair);
+      // setListOfStartStop([...listOfStartStop]);
+      // clearPos();
     }
   }
 
@@ -171,6 +180,20 @@ function App() {
     }
   };
 
+  const addNewTimeFrame = (newTimeFrameObj) => {
+    // const newTimeFrameObj = new TimeFrame(obj)
+    newTimeFrameObj.stopTime = 15;
+    newTimeFrameObj.startTime = 5;
+
+    newTimeFrameObj.increment = increment;
+    listOfStartStop.push(newTimeFrameObj);
+    setListOfStartStop([...listOfStartStop]);
+  }
+
+  console.log('viDur:', videoDuration)
+  console.log("inc:", increment)
+  console.log(listOfStartStop)
+
   return (
     <div className="App App-header">
       <video
@@ -184,6 +207,7 @@ function App() {
           loop();
         }}
         muted={true}
+        onDurationChange={setVidDuration}
       >
         <source src={defaultVidSource} type="video/mp4"></source>
       </video>
@@ -237,6 +261,7 @@ function App() {
         onKeyDown={HandleKeyDown}
         vidSource={defaultVidSource}
         setBackTime={setBackTime}
+        onCreate={addNewTimeFrame}
       />
       {recordState === true && (
         <div>
@@ -247,6 +272,9 @@ function App() {
         Scrub forward +5 second with "L" key and back -5 seconds with "J" key.
         Play/Pause with "K" key.
       </p>
+      <button onClick={() => {
+        addNewTimeFrame(testObj)
+      }}>Click</button>
     </div>
   );
 }

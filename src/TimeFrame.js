@@ -6,6 +6,10 @@ export class TimeFrame {
     this.description = obj.description;
   }
 
+  printTimeFrames() {
+    console.log(this.startTime);
+    console.log(this.stopTime);
+  }
   getStartTimePos() {
       return this.startTime * this.increment;
   }
